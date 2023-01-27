@@ -1,0 +1,52 @@
+<p>My todo list!</p>
+
+<div>
+    <button (click)="add()">Add todo</button>
+</div>
+
+<div>
+    <button
+        (click)="filter('all')"
+        [ngStyle]="{
+            'font-weight': (filter$ | async) === 'all' ? 'bold' : 'normal'
+        }"
+    >
+        All
+    </button>
+    <button
+        (click)="filter('pending')"
+        [ngStyle]="{
+            'font-weight': (filter$ | async) === 'pending' ? 'bold' : 'normal'
+        }"
+    >
+        Pending
+    </button>
+    <button
+        (click)="filter('completed')"
+        [ngStyle]="{
+            'font-weight': (filter$ | async) === 'completed' ? 'bold' : 'normal'
+        }"
+    >
+        Complete
+    </button>
+</div>
+
+<pre>{{ entities$ | async | json }}</pre>
+<pre>{{ filter$ | async | json }}</pre>
+
+<ul>
+    <li *ngFor="let todo of entities$ | async">
+        <span
+            [ngStyle]="{
+                'text-decoration': todo.completed ? 'line-through' : 'normal'
+            }"
+        >
+            {{ todo.task }}
+        </span>
+        <button (click)="edit(todo)" [disabled]="todo.completed">Edit</button>
+        <button (click)="delete(todo.id)" [disabled]="todo.completed">
+            Delete
+        </button>
+        <button (click)="toggle(todo.id)">Toggle</button>
+    </li>
+</ul>
