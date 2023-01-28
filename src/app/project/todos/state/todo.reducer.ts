@@ -70,3 +70,24 @@ export const selectTodosTotal = createSelector(
     selectEntities,
     (entities) => entities.length
 );
+
+export const selectTodosStateSummary = createSelector(
+    selectEntities,
+    (entities) =>
+        entities.reduce(
+            (previous, current) => {
+                previous.all += 1;
+
+                if (!current.completed) {
+                    previous.pending += 1;
+                }
+
+                if (current.completed) {
+                    previous.completed += 1;
+                }
+
+                return previous;
+            },
+            { all: 0, pending: 0, completed: 0 }
+        )
+);

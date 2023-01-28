@@ -10,8 +10,10 @@ import * as fromTodos from "../todos/state/todo.reducer";
 })
 export class DashboardComponent {
   todos$: Observable<number>;
+  summary$: Observable<any>
 
   constructor(private readonly store: Store<fromTodos.State>) {
     this.todos$ = this.store.select(fromTodos.selectTodosTotal);
+    this.summary$ = this.store.select(fromTodos.selectTodosStateSummary)
   }
 }

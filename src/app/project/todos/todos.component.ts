@@ -4,6 +4,7 @@ import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { TodoModel } from "./models/todo.model";
 import { todoActions } from "./state/todo.actions";
+import { getRandomWords } from "../utils/string.utils";
 
 @Component({
   selector: "app-todos",
@@ -24,7 +25,7 @@ export class TodosComponent {
       todoActions.add({
         entity: <TodoModel>{
           id: crypto.randomUUID(),
-          task: "lorem",
+          task: getRandomWords(),
           completed: false,
         },
       })
@@ -33,7 +34,7 @@ export class TodosComponent {
 
   edit(entity: TodoModel) {
     this.store.dispatch(
-      todoActions.edit({ id: entity.id, entity: { task: "yahoo" } })
+      todoActions.edit({ id: entity.id, entity: { task: getRandomWords() } })
     );
   }
 

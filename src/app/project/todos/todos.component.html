@@ -4,38 +4,42 @@
     <button (click)="add()">Add todo</button>
 </div>
 
-<div>
+<div class="flex justify-center space-x-2 mb-2">
     <button
         (click)="filter('all')"
-        [ngStyle]="{
-            'font-weight': (filter$ | async) === 'all' ? 'bold' : 'normal'
+        [ngClass]="{
+            'bg-orange-400 px-2 py-2 rounded': (filter$ | async) === 'all'
         }"
     >
         All
     </button>
     <button
         (click)="filter('pending')"
-        [ngStyle]="{
-            'font-weight': (filter$ | async) === 'pending' ? 'bold' : 'normal'
+        [ngClass]="{
+            'bg-orange-400 px-2 py-2 rounded': (filter$ | async) === 'pending'
         }"
     >
         Pending
     </button>
     <button
         (click)="filter('completed')"
-        [ngStyle]="{
-            'font-weight': (filter$ | async) === 'completed' ? 'bold' : 'normal'
+        [ngClass]="{
+            'bg-orange-400 px-2 py-2 rounded': (filter$ | async) === 'completed'
         }"
     >
         Complete
     </button>
 </div>
 
-<pre>{{ entities$ | async | json }}</pre>
-<pre>{{ filter$ | async | json }}</pre>
+<pre class="p-2 mb-2 bg-red-400 rounded text-xs">
+    {{ entities$ | async | json }}
+</pre>
+<pre class="p-2 mb-2 bg-red-400 rounded text-xs">
+    {{ filter$ | async | json }}
+</pre>
 
 <ul>
-    <li *ngFor="let todo of entities$ | async">
+    <li *ngFor="let todo of entities$ | async" class="flex justify-between">
         <span
             [ngStyle]="{
                 'text-decoration': todo.completed ? 'line-through' : 'normal'
@@ -43,10 +47,12 @@
         >
             {{ todo.task }}
         </span>
+        <div class="space-x-2">
         <button (click)="edit(todo)" [disabled]="todo.completed">Edit</button>
         <button (click)="delete(todo.id)" [disabled]="todo.completed">
             Delete
         </button>
         <button (click)="toggle(todo.id)">Toggle</button>
+        </div>
     </li>
 </ul>
